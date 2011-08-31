@@ -63,12 +63,10 @@ module Devise
       #
       # Returns the success of the invitation as a Boolean.
       def invite
-        if new_record? || invited?
-          @skip_password = true
-          self.skip_confirmation! if self.respond_to? :skip_confirmation!
-          generate_invitation_token unless !valid? && self.class.validate_on_invite
-          save(:validate => self.class.validate_on_invite) && !!deliver_invitation
-        end
+        @skip_password = true
+        self.skip_confirmation! if self.respond_to? :skip_confirmation!
+        generate_invitation_token unless !valid? && self.class.validate_on_invite
+        save(:validate => self.class.validate_on_invite) && !!deliver_invitation
       end
       
       # Public: Accept the record's current invitation. The invitation can be
